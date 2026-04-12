@@ -1,3 +1,3 @@
-const API = import.meta.env.VITE_API_URL || "http://localhost:2345";
+const API = "https://elearn-backend-qdc0.onrender.com";
 
 export default API;
