@@ -5,7 +5,20 @@ import bcryptjs from "bcryptjs";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+// ================= CORS FIX =================
+app.use(cors({
+  origin: [
+    "https://kumariisoni.github.io",
+    "https://e-learn-website.onrender.com",
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://localhost:2345"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
 
 // ================= DB =================
 const MONGODB_URI = process.env.MONGO_URI || process.env.MONGODB_URI || "mongodb://localhost:27017/lms";
