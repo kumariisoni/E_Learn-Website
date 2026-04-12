@@ -11,10 +11,16 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const backendUnavailable = !API;
 
   const signup = async (event) => {
     event.preventDefault();
     setError("");
+
+    if (backendUnavailable) {
+      setError("The backend is not deployed. Signup is currently unavailable.");
+      return;
+    }
 
     if (!name.trim() || !email.trim() || !password.trim()) {
       setError("All fields are required.");

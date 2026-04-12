@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: elearn-backend
+    env: node
+    plan: free
+    branch: main
+    root: lms/backend
+    buildCommand: npm install
+    startCommand: npm start
+
+  - type: static
+    name: elearn-frontend
+    plan: free
+    branch: main
+    root: lms/frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist

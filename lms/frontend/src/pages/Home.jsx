@@ -2,18 +2,56 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import API from "../api";
 
+const demoCourses = [
+  {
+    _id: "demo1",
+    title: "Introduction to Web Development",
+    description: "Build your first website using HTML, CSS, and JavaScript.",
+    poster: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    _id: "demo2",
+    title: "React for Beginners",
+    description: "Learn how to build modern UI with React and Vite.",
+    poster: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    _id: "demo3",
+    title: "Data Visualization with Recharts",
+    description: "Create beautiful charts and dashboards for your users.",
+    poster: "https://images.unsplash.com/photo-1545235617-9465d369d92b?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    _id: "demo4",
+    title: "Build a Fullstack LMS",
+    description: "Understand how frontend and backend work together in a learning platform.",
+    poster: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80"
+  }
+];
+
 export default function Home() {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
+  const [fetchError, setFetchError] = useState("");
 
   useEffect(() => {
+    if (!API) {
+      setFetchError("Backend is not configured for production. The site is running in demo mode.");
+      setCourses(demoCourses);
+      return;
+    }
+
     fetch(API + "/courses")
       .then(res => res.json())
       .then(data => {
         // Show only first 4 courses on home page
         setCourses(data.slice(0, 4));
       })
-      .catch(err => console.error("Could not fetch popular courses"));
+      .catch(err => {
+        console.error("Could not fetch popular courses", err);
+        setFetchError("Could not load courses because the backend is unavailable.");
+        setCourses(demoCourses);
+      });
   }, []);
 
   const enrollCourse = async (courseId) => {
@@ -111,6 +149,12 @@ export default function Home() {
             <span style={styles.subtitle}>Curated for you</span>
             <h2 style={styles.sectionTitle}>Trending Courses</h2>
           </div>
+
+          {fetchError && (
+            <div style={styles.errorBanner}>
+              {fetchError}
+            </div>
+          )}
 
           <div style={styles.courseGrid}>
             {courses.length === 0 ? <p style={{textAlign: "center", gridColumn: "1/-1"}}>Loading courses...</p> : courses.map(course => (
@@ -257,6 +301,15 @@ const styles = {
     fontSize: "0.95rem",
     marginBottom: "20px",
     flexGrow: 1
+  },
+  errorBanner: {
+    padding: "18px 22px",
+    borderRadius: "14px",
+    background: "#fee2e2",
+    color: "#991b1b",
+    marginBottom: "30px",
+    border: "1px solid #fecaca",
+    textAlign: "center"
   },
   enrollBtn: {
     width: "100%",

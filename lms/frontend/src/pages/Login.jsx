@@ -13,6 +13,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const backendUnavailable = !API;
 
   const switchMode = (mode) => {
     setLoginMode(mode);
@@ -30,6 +31,11 @@ export default function Login() {
   const login = async (event) => {
     event.preventDefault();
     setError("");
+
+    if (backendUnavailable) {
+      setError("The backend is not deployed. Login is currently unavailable.");
+      return;
+    }
 
     if (!email.trim() || !password.trim()) {
       setError("Please enter both your email and password.");
@@ -114,6 +120,10 @@ export default function Login() {
             <h2>{loginMode === "student" ? "Student Portal" : "Admin Operations"}</h2>
             <p>{loginMode === "student" ? "Continue your learning journey 🚀" : "Manage system records & courses ⚙️"}</p>
           </div>
+
+          {backendUnavailable && (
+            <p className="auth-error">Backend not deployed. Login and signup will not work until you deploy the backend and configure VITE_API_URL.</p>
+          )}
 
           <form onSubmit={login} style={{display: 'flex', flexDirection: 'column'}}>
               <label className="auth-label">{loginMode === "admin" ? "Admin Assigned ID (Email)" : "Email"}</label>

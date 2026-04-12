@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar"; 
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
@@ -15,7 +15,7 @@ import Contact from "./pages/Contact";
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <Navbar />
 
       <Routes>
@@ -43,7 +43,6 @@ function App() {
           }
         />
 
-        {/* ✅ FIXED: moved inside Routes */}
         <Route
           path="/admin"
           element={
@@ -55,7 +54,7 @@ function App() {
       </Routes>
 
       <Footer />
-    </BrowserRouter>
+    </>
   );
 }
  export default App

@@ -8,10 +8,12 @@ app.use(express.json());
 app.use(cors());
 
 // ================= DB =================
+const MONGODB_URI = process.env.MONGO_URI || process.env.MONGODB_URI || "mongodb://localhost:27017/lms";
+
 mongoose
-  .connect("mongodb://localhost:27017/lms")
+  .connect(MONGODB_URI)
   .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.log(err));
+  .catch(err => console.log("❌ MongoDB Error:", err));
 
 // ================= MODELS =================
 
@@ -33,6 +35,12 @@ const courseSchema = new mongoose.Schema({
 });
 
 const Course = mongoose.model("Course", courseSchema);
+
+// ================= TEST ROUTE =================
+
+app.get("/", (req, res) => {
+  res.json({ msg: "✅ E-Learn API is running!" });
+});
 
 // ================= AUTH =================
 
@@ -67,7 +75,12 @@ app.post("/login", async (req, res) => {
     if (!ok)
       return res.status(400).json({ msg: "Wrong password" });
 
-    res.json({ msg: "Login successful", userId: user._id, name: user.name, isAdmin: user.isAdmin });
+    res.json({
+      msg: "Login successful",
+      userId: user._id,
+      name: user.name,
+      isAdmin: user.isAdmin
+    });
   } catch (err) {
     res.status(500).json({ msg: "Login error" });
   }
@@ -237,6 +250,7 @@ app.get("/dashboard/:userId", async (req, res) => {
 });
 
 // ================= START =================
-app.listen(2345, () =>
-  console.log("🚀 Server running on http://localhost:2345")
+const PORT = process.env.PORT || 2345;
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on port ${PORT}`)
 );
