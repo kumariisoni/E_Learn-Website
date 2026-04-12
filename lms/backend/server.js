@@ -7,18 +7,15 @@ const app = express();
 app.use(express.json());
 
 // ================= CORS FIX =================
-app.use(cors({
-  origin: [
-    "https://kumariisoni.github.io",
-    "https://e-learn-website.onrender.com",
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://localhost:2345"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 // ================= DB =================
 const MONGODB_URI = process.env.MONGO_URI || process.env.MONGODB_URI || "mongodb://localhost:27017/lms";
