@@ -1,0 +1,127 @@
+/* Background */
+.auth-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Container */
+.auth-container {
+  text-align: center;
+}
+
+/* Title */
+.auth-title {
+  color: white;
+  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* Card */
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+.auth-card__header h2 {
+  margin-bottom: 5px;
+}
+
+.auth-card__header p {
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.auth-label {
+  display: block;
+  text-align: left;
+  margin: 10px 0 5px;
+  font-weight: 500;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: 0.3s;
+}
+
+.auth-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+/* Error */
+.auth-error {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Button */
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #9333ea);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.auth-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+}
+
+.auth-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Loader */
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 3px solid white;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Switch */
+.auth-switch {
+  margin-top: 15px;
+}
+
+.auth-switch a {
+  color: #6366f1;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
